@@ -1,7 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { Subscription } from "rxjs";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-
 import { Issue } from "./issue";
 import { IssuesService } from "../issues.service";
 
@@ -14,23 +12,14 @@ import { IssuesService } from "../issues.service";
 export class IssueComponent implements OnInit {
   issues: Issue[] = [];
   selectedissue: Issue;
-  isLoading = false;
-  private postsSub: Subscription;
 
   constructor(public postsService: IssuesService) { }
 
-  ngOnInit() {
-    this.getissues();
-  }
+  ngOnInit() { }
 
   getissues() {
-    this.postsService.getPersons().subscribe(items => {
-      console.log(items);
-
+    this.postsService.getIssues().subscribe(items => {
       this.issues = items;
-      console.log(items);
-      console.log("issue name " + this.issues[0].issuename);
-      console.log("issue content " + this.issues[0].issuecontent);
     });
   }
   addIssues(form) {
@@ -39,7 +28,6 @@ export class IssueComponent implements OnInit {
       issuecontent: form.value.issuecontent
     };
     this.postsService.addIssue(newIssue).subscribe(item => {
-      console.log(item);
       this.getissues();
     });
   }

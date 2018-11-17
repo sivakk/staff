@@ -14,8 +14,6 @@ import {
   Validators
 } from "@angular/forms";
 import { ActivatedRoute, ParamMap, Params } from "@angular/router";
-
-
 import { Post } from "../post.model";
 import { mimeType } from "./mime-type.validator";
 import { Food } from "./Food";
@@ -31,48 +29,27 @@ export interface Food {
   styleUrls: ["./post-create.component.css"]
 })
 export class PostCreateComponent implements OnInit {
-  enteredTitle = "";
-  now1: Date;
-  enteredContent = "";
-  birthday = new Date();
+
   post: Post;
-  interval: any;
-  interval1: any;
   isLoading = false;
   form: FormGroup;
   imagePreview: any;
   private mode = "create";
   private postId: string;
-  timeLeft: number = 1;
-  timeLeft1: number = 1;
   today1: any;
-  value: any;
-  count1: number = 0;
-  timer: number;
-  m: number = 0;
-  hours: any;
-  count: number;
-  end: number;
   customers = ["sai", "siva", "murali"];
   selectedValue: string;
   selectedCar: string;
+  today4: any = moment().format("MMMM Do YYYY,h:mm:ss ");
 
   foods: Food[] = [
     { value: "steak-0", viewValue: "Steak" },
     { value: "pizza-1", viewValue: "Pizza" },
     { value: "tacos-2", viewValue: "Tacos" }
   ];
-  currenttime = new Date().getTime();
-  today4: any = moment().format("MMMM Do YYYY,h:mm:ss ");
-  today = new Date().getTime();
-  today2 = new Date().getTime();
-  today3 = this.today - this.today1;
-  jstoday = "";
 
-  constructor(
-    public postsService: PostsService,
-    public route: ActivatedRoute
-  ) { }
+
+  constructor(public postsService: PostsService, public route: ActivatedRoute) { }
 
   ngOnInit() {
     this.form = new FormGroup({
@@ -113,7 +90,6 @@ export class PostCreateComponent implements OnInit {
   }
 
   onImagePicked(event: Event) {
-    console.log(this.value);
     const file = (event.target as HTMLInputElement).files[0];
     this.form.patchValue({ image: file });
     this.form.get("image").updateValueAndValidity();

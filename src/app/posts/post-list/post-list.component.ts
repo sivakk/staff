@@ -32,19 +32,15 @@ export interface Car {
   styleUrls: ["./post-list.component.css"],
   providers: [IssuesService]
 })
-export class PostListComponent implements OnInit, AfterContentInit, OnDestroy {
+export class PostListComponent implements OnInit, OnDestroy {
   private postsSub: Subscription;
   posts: Post[] = [];
   times: Times[] = [];
   issues: Issue[] = [];
-  time: Time[] = [];
   selectedValue: string;
   selectedCar: string;
   selectedissue: Issue;
   isLoading = false;
-  isLoading1 = false;
-  count1: any;
-  y1: any;
   today1: any = new Date().getTime();
   today3: string = moment().format("MMMM Do YYYY");
   day: any = moment().format("hh:mm:ss");
@@ -53,33 +49,16 @@ export class PostListComponent implements OnInit, AfterContentInit, OnDestroy {
   time5: any = moment().format("hh:mm:ss");
   today4: any = moment().format("hh:mm:ss");
   exacttime: any = new Date().getTime();
-  messages: any;
-  post: any;
-  status: any;
-  res: any;
-  startDate: any;
-  interval: any;
-  interval1: any;
-  seq: any;
-  abc: any;
   form: FormGroup;
   disableButton: any;
   jobstarted: any;
-  values: any;
-  count: number = 0;
-  countDownDate: any;
   disableButton1: any;
   jobupdatetime: string;
-  jobupadate: any;
   imagePreview: any;
   jobstarttime: any;
   jobupdatedtimes: any;
-  res2: any;
   item: any;
   list: any;
-  list1: any;
-  y: number = 0;
-  h: number = 0;
   options = [1, 2, 3];
   optionSelected: any;
   foods: Food[] = [
@@ -87,7 +66,6 @@ export class PostListComponent implements OnInit, AfterContentInit, OnDestroy {
     { value: "pizza-1", viewValue: "Pizza" },
     { value: "tacos-2", viewValue: "Tacos" }
   ];
-
   cars: Car[] = [
     { value: "volvo", viewValue: "Volvo" },
     { value: "saab", viewValue: "Saab" },
@@ -111,20 +89,14 @@ export class PostListComponent implements OnInit, AfterContentInit, OnDestroy {
         validators: [Validators.required]
       })
     });
-
     this.isLoading = true;
     this.postsService.getPosts();
-    this.IssuesService.getTime1();
-
     this.postsSub = this.postsService
       .getPostUpdateListener()
       .subscribe((posts: Post[]) => {
         this.posts = posts;
         this.isLoading = false;
       });
-
-    this.isLoading1 = false;
-
   }
 
   async getonloadcopy() {
@@ -141,10 +113,6 @@ export class PostListComponent implements OnInit, AfterContentInit, OnDestroy {
       this.jobupdatetime = moment.utc(+d).format("H:mm");
       this.times[0].jobupdatetime = this.jobupdatetime;
       this.jobupdatedtimes = this.times[0].jobupdatetime;
-
-
-
-
       return this.jobupdatedtimes, this.jobstarttime;
     });
   }
@@ -153,7 +121,6 @@ export class PostListComponent implements OnInit, AfterContentInit, OnDestroy {
   async onloadcopy() {
     let now = moment().format("LLLL");
     this.IssuesService.onload(now, this.jobstarted, this.jobupdatetime).subscribe(ele => { this.list = ele; });
-
   }
 
 
@@ -169,23 +136,10 @@ export class PostListComponent implements OnInit, AfterContentInit, OnDestroy {
 
   addIssues(form) {
     var newIsssue1 = form.value;
-    console.log(newIsssue1);
-
-    this.IssuesService.addIssue(newIsssue1).subscribe(item => {
-      console.log(item);
-      this.getissues();
-    });
+    this.IssuesService.addIssue(newIsssue1).subscribe(item => { this.getissues(); });
   }
 
-  updatetime(postId: string, res) {
-    console.log(res);
-    const id = postId;
-    console.log(id);
 
-    this.IssuesService.updatetime(id, res).subscribe(item => {
-      console.log(item);
-    });
-  }
 
   onEdit(postId: string, posttitle: string, postcontent: string, postimg: File | string) {
     this.postsService.Editimage(
@@ -197,7 +151,7 @@ export class PostListComponent implements OnInit, AfterContentInit, OnDestroy {
   }
 
 
-  truthClick() {
+  startClick() {
     this.disableButton = true;
     this.jobstarted = true;
 
@@ -215,7 +169,7 @@ export class PostListComponent implements OnInit, AfterContentInit, OnDestroy {
   }
 
 
-  truthClick1() {
+  stopClick() {
     this.disableButton1 = true;
     let now = moment().format("MMMM Do YYYY");
     let exacttime2: string = new Date().getTime().toString();
@@ -255,30 +209,17 @@ export class PostListComponent implements OnInit, AfterContentInit, OnDestroy {
 
     reader.readAsDataURL(file);
   }
-  getissues() {
-    this.IssuesService.getPersons().subscribe(items => {
-      if (items) {
-        console.log(items);
 
+  getissues() {
+    this.IssuesService.getIssues().subscribe(items => {
+      if (items) {
         this.issues = items;
         this.item = this.issues.length;
-
-        console.log(items);
-        console.log("issue name " + this.issues[0].issuename);
-        console.log("issue content " + this.issues[0].issuecontent);
         this.showSuccess();
       } else {
         this.showInfo();
       }
     });
-    if (this.item) {
-      // this.showSuccess();
-      this.item = 0;
-    }
-  }
-  ngAfterContentInit() {
-    console.log(this.jobstarttime);
-
   }
   ngOnDestroy() {
     this.postsSub.unsubscribe();

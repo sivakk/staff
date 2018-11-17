@@ -15,44 +15,8 @@ export class IssuesService {
 
   constructor(private http: Http, private router: Router) { }
 
-  addTime(timesequence, startjob) {
-    //console.log(timesequence);
-
-    var obj = {
-      timesequence: timesequence,
-      startjob: startjob
-    };
-    // console.log(timesequence);
-
-    //console.log(obj);
-
-    let headers = new Headers();
-    headers.append("Content-Type", "application/json");
-    return this.http
-      .post("http://localhost:3000/api/timers/post_route", obj, {
-        headers: headers
-      })
-      .pipe(map(res => res));
-  }
-
-  updatetime(id: string, timesequence: string) {
-    console.log(timesequence);
-    var obj = {
-      timesequence: timesequence
-    };
-    let headers = new Headers();
-    headers.append("Content-Type", "application/json");
-    return this.http
-      .put("http://localhost:3000/api/timers/putRoute/" + id, obj, {
-        headers: headers
-      })
-      .pipe(map(res => res.json()));
-  }
-
-
 
   onload(values: any, jobstarted: any, jobupdatetime: string) {
-    console.log(jobupdatetime);
     var obj = {
       values: values,
       jobstarted: jobstarted,
@@ -62,43 +26,6 @@ export class IssuesService {
     headers.append("Content-Type", "application/json");
     return this.http
       .post("http://localhost:3000/api/time/post_route", obj, {
-        headers: headers
-      })
-      .pipe(map(res => res.json()));
-  }
-
-  getPersons() {
-    return this.http
-      .get("http://localhost:3000/api/issues/test")
-      .pipe(map(res => res.json()));
-  }
-
-  getPersons1() {
-    return this.http
-      .get("http://localhost:3000/api/issues/ss")
-      .pipe(map(res => res.json()));
-  }
-
-  getTime() {
-    return this.http
-      .get("http://localhost:3000/api/timers/test")
-      .pipe(map(res => res.json()));
-  }
-  getTime1() {
-    return this.http
-      .get("http://localhost:3000/api/timers/time")
-      .pipe(map(res => res.json()));
-  }
-  getonload() {
-    return this.http
-      .get("http://localhost:3000/api/time/time")
-      .pipe(map(res => res.json()));
-  }
-  addIssue(newIssue) {
-    let headers = new Headers();
-    headers.append("Content-Type", "application/json");
-    return this.http
-      .post("http://localhost:3000/api/issues/post_route", newIssue, {
         headers: headers
       })
       .pipe(map(res => res.json()));
@@ -141,5 +68,38 @@ export class IssuesService {
       .pipe(map(res => res.json()));
 
   }
+
+  getonload() {
+    return this.http
+      .get("http://localhost:3000/api/time/time")
+      .pipe(map(res => res.json()));
+  }
+
+
+
+  addIssue(newIssue) {
+    let headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    return this.http
+      .post("http://localhost:3000/api/issues/post_route", newIssue, {
+        headers: headers
+      })
+      .pipe(map(res => res.json()));
+  }
+
+
+  getIssues() {
+    return this.http
+      .get("http://localhost:3000/api/issues/test")
+      .pipe(map(res => res.json()));
+  }
+
+
+
+
+
+
+
+
 
 }

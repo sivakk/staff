@@ -9,7 +9,6 @@
       </div>
       <div class="row">
         <div class="col-sm-3">
-          <!--left col-->
 
 
           <div class="text-center post-image">
@@ -90,17 +89,15 @@
 
         <div class="row">
           <div class="col-5">
-            <button type="button" (click)="truthClick();pick();updatetime(post.id)" [disabled]=" jobstarted" class="btn btn-primary btn-lg">Start
+            <button type="button" (click)="startClick();pick();updatetime(post.id)" [disabled]=" jobstarted" class="btn btn-primary btn-lg">Start
               Timer</button>
           </div>
           <div class="col-4">
             <p> {{jobupdatetime }} Job Done</p>
-            <div *ngIf="seq">
-              <p>{{seq}}</p>
-            </div>
+
           </div>
           <div class="col-sm">
-            <button type="button" (click)="truthClick1()" [disabled]="disableButton1" class="btn btn-danger btn-lg btn btn-danger">Stop
+            <button type="button" (click)="stopClick()" [disabled]="disableButton1" class="btn btn-danger btn-lg btn btn-danger">Stop
               Timer</button>
           </div>
 
@@ -130,26 +127,5 @@
           Issue</button>
       </form>
     </mat-card>
-  </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-<div *ngFor="let post of issues ">
-  <div *ngIf=post>
-    <div *ngIf="!isLoading ; else elseBlock">
-      {{post.issuename}}
-    </div>
-    <div *ngIf="isLoading">
-    </div>
   </div>
 </div>
