@@ -1,0 +1,155 @@
+<div *ngFor="let post of posts">
+  <div class="container bootstrap snippet">
+    <mat-card>
+      <div class="row">
+        <div class="col-sm-10">
+
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-sm-3">
+          <!--left col-->
+
+
+          <div class="text-center post-image">
+            <img [src]="post.imagePath" class="" alt="avatar">
+
+
+          </div>
+          <a mat-button color="primary" [routerLink]="['/edit', post.id]">EDIT</a>
+          <button mat-button color="warn" (click)="onDelete(post.id)">DELETE</button>
+
+
+
+
+
+
+        </div>
+
+        <div class="col-sm-9">
+
+
+
+          <div class="tab-content">
+            <div class="tab-pane active" id="home">
+
+              <form class="form" action="##" method="post" id="registrationForm">
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-sm-8">
+                      <label for="first_name">
+                        <h4>Name: {{post.title}}</h4>
+
+
+                      </label>
+
+                    </div>
+                    <div class="col-sm-4">
+                      <p>{{today5}}</p>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="form-group">
+
+                  <div class="col-xs-6 ">
+                    <label for="last_name">
+                      <h4>Username: {{post.content}}</h4>
+                    </label>
+
+                  </div>
+                </div>
+
+
+
+
+
+
+              </form>
+
+
+
+            </div>
+
+
+
+
+          </div>
+
+        </div>
+
+
+      </div>
+    </mat-card>
+    <hr>
+    <mat-card>
+
+      <div class="container">
+
+        <div class="row">
+          <div class="col-5">
+            <button type="button" (click)="truthClick();pick();updatetime(post.id)" [disabled]=" jobstarted" class="btn btn-primary btn-lg">Start
+              Timer</button>
+          </div>
+          <div class="col-4">
+            <p> {{jobupdatetime }} Job Done</p>
+            <div *ngIf="seq">
+              <p>{{seq}}</p>
+            </div>
+          </div>
+          <div class="col-sm">
+            <button type="button" (click)="truthClick1()" [disabled]="disableButton1" class="btn btn-danger btn-lg btn btn-danger">Stop
+              Timer</button>
+          </div>
+
+
+        </div>
+      </div>
+    </mat-card>
+    <hr>
+
+
+    <mat-card>
+      <form (ngSubmit)="addIssues(frm)" #frm="ngForm">
+
+        <h2>Raise issue</h2>
+        <div class="form-group">
+          <label>Select issue :</label>
+          <select class="form-control" [(ngModel)]="selectedValue" name="issueName" style="margin-bottom: 20px;">
+            <option *ngFor="let food of foods" [value]="food.value">
+              {{food.viewValue}}
+            <option>
+          </select>
+
+          <label>Comment :</label>
+          <input type="text" class="form-control" name="issueComment" [(ngModel)]="issueComment">
+        </div>
+        <button type="submit" name="button" class="btn btn-success" [disabled]=frm.invalid>Add
+          Issue</button>
+      </form>
+    </mat-card>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<div *ngFor="let post of issues ">
+  <div *ngIf=post>
+    <div *ngIf="!isLoading ; else elseBlock">
+      {{post.issuename}}
+    </div>
+    <div *ngIf="isLoading">
+    </div>
+  </div>
+</div>
