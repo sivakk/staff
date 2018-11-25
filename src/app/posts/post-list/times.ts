@@ -3,6 +3,10 @@ export interface Times {
   jobstarted: boolean;
   timesequence: string;
   startjobtime: string;
+  jobended: boolean;
+  jobendtime: any;
+  jobdone: any;
+  totaltime: any;
   s: any;
   jobupdatetime: string;
   date: string;

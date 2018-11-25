@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AlertModule } from 'ngx-bootstrap';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
+import { enableProdMode } from '@angular/core';
 import { Observable } from "rxjs";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { HttpModule } from "@angular/http";
@@ -25,13 +26,15 @@ import { IssueComponent } from './issue/issue.component';
 import { PostCreateComponent } from './posts/post-create/post-create.component';
 import { PostListComponent } from './posts/post-list/post-list.component';
 import { AppRoutingModule } from "./app-routing.module";
+import { UsersComponent } from './posts/users/users.component';
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     IssueComponent,
     PostCreateComponent,
-    PostListComponent
+    PostListComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule, BrowserModule,

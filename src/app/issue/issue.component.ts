@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Issue } from "./issue";
 import { IssuesService } from "../issues.service";
+import * as moment from "moment";
 
 @Component({
   selector: "app-issue",
@@ -12,23 +13,12 @@ import { IssuesService } from "../issues.service";
 export class IssueComponent implements OnInit {
   issues: Issue[] = [];
   selectedissue: Issue;
+  today5: any;
 
   constructor(public postsService: IssuesService) { }
 
   ngOnInit() { }
 
-  getissues() {
-    this.postsService.getIssues().subscribe(items => {
-      this.issues = items;
-    });
-  }
-  addIssues(form) {
-    let newIssue: Issue = {
-      issuename: form.value.issuename,
-      issuecontent: form.value.issuecontent
-    };
-    this.postsService.addIssue(newIssue).subscribe(item => {
-      this.getissues();
-    });
-  }
+
+
 }

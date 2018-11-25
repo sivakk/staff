@@ -31,22 +31,21 @@ const timerSchema1 = mongoose.Schema({
   jobstarted: {
     type: Boolean,
     default: false
-
-
+  },
+  jobended: {
+    type: Boolean,
+    default: false
   },
   timet: {
     type: String
   },
-  jobupdatetime: {
+
+  jobendtime: {
     type: String
   },
-  exacttime: {
-    type: String
-  },
-  exacttime2: {
+  jobdone: {
     type: String
   }
-
 
 
 

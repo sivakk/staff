@@ -27,8 +27,8 @@ mat-spinner {
 
   border-radius: 50%;
   background-color: #ddd;
-  width: 200px;
-  height: 200px;
+  width: 130px;
+  height: 130px;
   overflow: hidden;
   border: 5px solid #fff;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
@@ -45,7 +45,7 @@ mat-spinner {
   visibility: hidden;
 }
 
-.image-preview img {
+/* .image-preview img {
   height: 100%;
 }
 
@@ -53,4 +53,4 @@ mat-spinner {
   height: 5rem;
   margin: 1rem 0;
 
-}
+} */

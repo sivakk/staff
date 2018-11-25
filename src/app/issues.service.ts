@@ -16,11 +16,13 @@ export class IssuesService {
   constructor(private http: Http, private router: Router) { }
 
 
-  onload(values: any, jobstarted: any, jobupdatetime: string) {
+  onload(values: any, jobstarted: any, jobupdatetime: string, jobended: any, jobdone: any) {
     var obj = {
       values: values,
       jobstarted: jobstarted,
-      jobupdatetime: jobupdatetime
+      jobupdatetime: jobupdatetime,
+      jobended: jobended,
+      jobdone: jobdone
     };
     let headers = new Headers();
     headers.append("Content-Type", "application/json");
@@ -31,14 +33,14 @@ export class IssuesService {
       .pipe(map(res => res.json()));
   }
 
-  updateonload(date: string, jobstarted: string, jobstarttime: string, exacttime: any) {
-    console.log(date, exacttime, jobstarted);
+  updateonload(date: string, jobstarted: string, jobstarttime: string) {
+    console.log(date, jobstarted);
 
     var obj = {
       date: date,
       jobstarted: jobstarted,
       jobstarttime: jobstarttime,
-      exacttime: exacttime
+
     };
     let headers = new Headers();
     headers.append("Content-Type", "application/json");
@@ -49,12 +51,13 @@ export class IssuesService {
       .pipe(map(res => res.json()));
   }
 
-  addstoptime(date: string, exacttime2: string) {
-    console.log(exacttime2);
+  addstoptime(date: string, jobendtime: string, jobended: any) {
+    console.log(jobendtime);
 
     var obj = {
       date: date,
-      exacttime2: exacttime2
+      jobendtime: jobendtime,
+      jobended: jobended
 
     };
     console.log(obj);
@@ -63,6 +66,26 @@ export class IssuesService {
     headers.append("Content-Type", "application/json");
     return this.http
       .put("http://localhost:3000/api/time/putroutestoptime/", obj, {
+        headers: headers
+      })
+      .pipe(map(res => res.json()));
+
+  }
+
+  totalTime(date: string, jobdone: any) {
+    console.log(jobdone);
+
+    var obj = {
+      date: date,
+      jobdone: jobdone
+
+    };
+    console.log(obj);
+
+    let headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    return this.http
+      .put("http://localhost:3000/api/time/putroutetotaltime/", obj, {
         headers: headers
       })
       .pipe(map(res => res.json()));

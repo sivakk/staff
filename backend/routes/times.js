@@ -6,7 +6,6 @@ var moment = require("moment");
 var now = moment();
 var now1 = Date.now();
 let day1 = now.format("MMMM Do YYYY");
-console.log(now.format("MMMM Do YYYY"));
 
 
 
@@ -38,26 +37,28 @@ savetime = function (newTime, callback) {
 router.post('/post_route', (req, res, next) => { ///post time 
 
 
-  let jobstarttime = dateFormat(new Date(), "yyyy-mm-dd h:MM:ss");
+  let jobstarttime = dateFormat(new Date(), "yyyy-mm-dd h:MM:ss A");
   let day2 = dateFormat(new Date(), "yyyy-mm-dd");
   let date1 = now.format("MMMM Do YYYY");
-  let timet = now.format("h:MM:ss");
+  let timet = now.format("h:MM:ss A");
   day1 = new Date().getMilliseconds();
 
   jobstarted = req.body.jobstarted;
   jobstarttime = req.body.jobstarttime;
   timet = req.body.timet;
   jobupdatetime = req.body.jobupdatetime;
+  jonended = req.body.jonended;
+  jobdone = req.body.jobdone;
+
 
 
   let time1 = {
-    timesequence: 0,
-    startjob: 0,
     jobstarttime: jobstarttime,
     date: date1,
     jobstarted: jobstarted,
-    jobupdatetime: jobupdatetime || 0,
-    exacttime2: 0
+    jobendtime: 0,
+    jonended: jonended,
+    jobdone: jobdone || 0
   };
   console.log(time1);
 
@@ -83,8 +84,7 @@ router.put('/putroute/', (req, res, next) => {
     }, {
       $set: {
         jobstarted: req.body.jobstarted,
-        jobstarttime: req.body.jobstarttime,
-        exacttime: req.body.exacttime,
+        jobstarttime: req.body.jobstarttime
 
 
       }
@@ -102,14 +102,37 @@ router.put('/putroute/', (req, res, next) => {
 
 router.put('/putroutestoptime/', (req, res, next) => {
 
-  console.log(req.body.exacttime2);
+  console.log(req.body.jobendtime);
   console.log(req.body.date)
 
   Time.findOneAndUpdate({
       date: req.body.date
     }, {
       $set: {
-        exacttime2: req.body.exacttime2
+        jobended: req.body.jobended,
+        jobendtime: req.body.jobendtime
+      }
+    },
+    function (err, result1) {
+      if (err) {
+        res.json(err);
+      } else {
+        res.json(result1)
+      }
+
+    });
+});
+
+router.put('/putroutetotaltime/', (req, res, next) => {
+
+  console.log(req.body.jobendtime);
+  console.log(req.body.date)
+
+  Time.findOneAndUpdate({
+      date: req.body.date
+    }, {
+      $set: {
+        jobdone: req.body.jobdone
       }
     },
     function (err, result1) {

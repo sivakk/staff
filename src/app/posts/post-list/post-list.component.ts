@@ -1,6 +1,6 @@
 import { IssuesService } from './../../issues.service';
-import { PostsService } from './../../posts.service';
-import { Post } from "../post.model";
+import { UsersService } from './../../users.service';
+import { User } from "../user.model";
 import { Component, OnInit, OnDestroy, OnChanges, AfterContentInit } from "@angular/core";
 import { Issue } from "./issue";
 import { Subscription, interval } from "rxjs";
@@ -8,13 +8,7 @@ import { ToastrService } from "ngx-toastr";
 import { Time } from "./time";
 import { Times } from "./times";
 import * as moment from "moment";
-import {
-  FormGroup,
-  FormsModule,
-  FormControl,
-  Validators,
-  AbstractControl
-} from "@angular/forms";
+import { FormGroup, FormsModule, FormControl, Validators, AbstractControl } from "@angular/forms";
 
 export interface Food {
   value: string;
@@ -33,31 +27,36 @@ export interface Car {
   providers: [IssuesService]
 })
 export class PostListComponent implements OnInit, OnDestroy {
-  private postsSub: Subscription;
-  posts: Post[] = [];
+  private usersSub: Subscription;
+  users: User[] = [];
   times: Times[] = [];
   issues: Issue[] = [];
   selectedValue: string;
   selectedCar: string;
   selectedissue: Issue;
   isLoading = false;
-  today1: any = new Date().getTime();
   today3: string = moment().format("MMMM Do YYYY");
-  day: any = moment().format("hh:mm:ss");
-  today5: any = moment().format('MMMM Do YYYY,h:mm:ss ');
-  today: any = moment().format("hh:mm:ss");
-  time5: any = moment().format("hh:mm:ss");
-  today4: any = moment().format("hh:mm:ss");
-  exacttime: any = new Date().getTime();
+  day: any = moment().format("hh:mm A");
+  today5: any = moment().format('MMMM Do YYYY,h:mm A');
+  date: any = moment().format('MMMM Do YYYY,h:mm A');
+  today: any = moment().format("hh:mm A");
+  time5: any = moment().format("hh:mm A ");
+  today4: any = moment().format("hh:mm A");
+
   form: FormGroup;
   disableButton: any;
   jobstarted: any;
   disableButton1: any;
-  jobupdatetime: string;
+  jobendtime: any;
+  convert: any;
+  jobdone: any;
+  jobended: any;
+  totaltime: any;
   imagePreview: any;
   jobstarttime: any;
   jobupdatedtimes: any;
   item: any;
+  isLoading1 = false;
   list: any;
   options = [1, 2, 3];
   optionSelected: any;
@@ -74,7 +73,7 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   constructor(
     private toastService: ToastrService,
-    public postsService: PostsService,
+    public usersService: UsersService,
     public IssuesService: IssuesService
   ) { }
 
@@ -90,11 +89,14 @@ export class PostListComponent implements OnInit, OnDestroy {
       })
     });
     this.isLoading = true;
-    this.postsService.getPosts();
-    this.postsSub = this.postsService
+    this.usersService.getPosts();
+    this.usersSub = this.usersService
       .getPostUpdateListener()
-      .subscribe((posts: Post[]) => {
-        this.posts = posts;
+      .subscribe((users: User[]) => {
+        this.users = users;
+        console.log(this.users[0].username);
+        console.log(this.users[0].name);
+
         this.isLoading = false;
       });
   }
@@ -102,36 +104,63 @@ export class PostListComponent implements OnInit, OnDestroy {
   async getonloadcopy() {
     return await this.IssuesService.getonload().subscribe(ele1 => {
       this.times = ele1;
-      let currentime: any = moment().format("hh:mm:ss");
+
       this.jobstarttime = this.times[0].jobstarttime;
+      this.jobendtime = this.times[0].jobendtime;
       this.jobstarted = this.times[0].jobstarted;
-      var start = moment.utc(this.jobstarttime, "HH:mm");
-      var end = moment.utc(currentime, "HH:mm");
-      if (end.isBefore(start)) end.add(1, "day");
-      var d = moment.duration(end.diff(start));
-      d.subtract(0, "minutes");
-      this.jobupdatetime = moment.utc(+d).format("H:mm");
-      this.times[0].jobupdatetime = this.jobupdatetime;
-      this.jobupdatedtimes = this.times[0].jobupdatetime;
-      return this.jobupdatedtimes, this.jobstarttime;
+      this.jobended = this.times[0].jobended;
+      this.totaltime = this.times[0].jobdone;
+
+
+
+
+
+
+
+
+
+      return this.jobstarttime, this.jobendtime, this.jobstarted, this.jobended,
+        // var interval1 = setInterval(() => {
+
+
+
+
+
+        this.IssuesService.getonload().subscribe(result => {
+          let now1 = moment().format("MMMM Do YYYY");
+          this.times = result;
+          if (!this.jobended == true) {
+            // this.jobendtime = this.times[0].jobendtime;
+            var start = moment.utc(this.jobstarttime, "hh:mm");
+            var end = moment.utc(this.today, "hh:mm ");
+            if (end.isBefore(start)) end.add(0, "day");
+            var d = moment.duration(end.diff(start));
+            d.subtract(0, "minutes");
+            this.totaltime = moment.utc(+d).format("H:mm");
+            console.log(this.totaltime);
+            this.IssuesService.totalTime(now1, this.totaltime).subscribe(result => {
+              console.log(result);
+
+            })
+          }
+
+        });
+      //  clearInterval(interval1);
+      this.isLoading1 = false;
+
+      // }, 2000);
     });
   }
 
 
   async onloadcopy() {
     let now = moment().format("LLLL");
-    this.IssuesService.onload(now, this.jobstarted, this.jobupdatetime).subscribe(ele => { this.list = ele; });
+    this.IssuesService.onload(now, this.jobstarted, this.jobended, this.jobended, this.jobdone)
+      .subscribe(ele => { this.list = ele; });
   }
 
 
-  imagetime() {
-    var interval = setInterval(() => {
-      this.getissues();
 
-      clearInterval(interval);
-      console.log("hai");
-    }, 5000);
-  }
 
 
   addIssues(form) {
@@ -141,18 +170,10 @@ export class PostListComponent implements OnInit, OnDestroy {
 
 
 
-  onEdit(postId: string, posttitle: string, postcontent: string, postimg: File | string) {
-    this.postsService.Editimage(
-      postId,
-      this.form.value.title,
-      this.form.value.content,
-      this.form.value.image
-    );
-  }
+
 
 
   startClick() {
-    this.disableButton = true;
     this.jobstarted = true;
 
 
@@ -160,40 +181,84 @@ export class PostListComponent implements OnInit, OnDestroy {
 
       this.today3,
       this.jobstarted,
-      this.day,
-      this.exacttime,
+      this.day
     ).subscribe(result => {
       console.log("original item to be update with old values" + result);
     });
-    return (this.jobstarted = true), this.jobupdatetime;
+    var interval = setInterval(() => {
+      this.getonloadcopy();
+
+      clearInterval(interval);
+    }, 1000);
+    return (this.jobstarted = true)
   }
 
 
   stopClick() {
-    this.disableButton1 = true;
-    let now = moment().format("MMMM Do YYYY");
-    let exacttime2: string = new Date().getTime().toString();
+    this.jobended = true;
+    this.isLoading1 = true;
 
-    this.IssuesService.addstoptime(now, exacttime2).subscribe(result => {
+
+
+
+
+
+    let now = moment().format("MMMM Do YYYY");
+    let jobendtime: string = moment().format("hh:mm");;
+
+    this.IssuesService.addstoptime(now, jobendtime, this.jobended).subscribe(result => {
       console.log("original item to be update with old values" + result);
     });
-    console.log(exacttime2);
 
-    return (this.jobstarted = true), this.jobupdatetime;
+
+
+    var interval1 = setInterval(() => {
+
+
+
+
+
+      this.IssuesService.getonload().subscribe(result => {
+        let now1 = moment().format("MMMM Do YYYY");
+        this.times = result;
+
+        this.jobendtime = this.times[0].jobendtime;
+        var start = moment.utc(this.jobstarttime, "hh:mm");
+        var end = moment.utc(this.jobendtime, "hh:mm");
+        if (end.isBefore(start)) end.add(0, "day");
+        var d = moment.duration(end.diff(start));
+        d.subtract(0, "minutes");
+        this.totaltime = moment.utc(+d).format("H:mm");
+        console.log(this.totaltime);
+        this.IssuesService.totalTime(now1, this.totaltime).subscribe(result => {
+          console.log(result);
+
+        })
+
+      });
+      clearInterval(interval1);
+      this.isLoading1 = false;
+
+    }, 2000);
+
+
+
+
+
+
+    return (this.jobstarted = true), this.jobended = true;
   }
 
 
 
   showSuccess() {
-    this.toastService.success("post", "Thank you");
+    this.toastService.success("issue raised successfully");
   }
 
   showInfo() {
     this.toastService.info("Not Added.");
   }
-  onDelete(postId: string) {
-    this.postsService.deletePost(postId);
-  }
+
   onOptionSelected(event) {
     console.log(event); //option value will be sent as event
   }
@@ -222,6 +287,6 @@ export class PostListComponent implements OnInit, OnDestroy {
     });
   }
   ngOnDestroy() {
-    this.postsSub.unsubscribe();
+    this.usersSub.unsubscribe();
   }
 }
