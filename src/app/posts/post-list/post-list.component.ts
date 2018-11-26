@@ -105,6 +105,11 @@ export class PostListComponent implements OnInit, OnDestroy {
     return await this.IssuesService.getonload().subscribe(ele1 => {
       this.times = ele1;
 
+      if (this.jobstarttime == undefined) {
+        console.log("loading");
+
+      }
+
       this.jobstarttime = this.times[0].jobstarttime;
       this.jobendtime = this.times[0].jobendtime;
       this.jobstarted = this.times[0].jobstarted;
@@ -145,10 +150,7 @@ export class PostListComponent implements OnInit, OnDestroy {
           }
 
         });
-      //  clearInterval(interval1);
-      this.isLoading1 = false;
 
-      // }, 2000);
     });
   }
 

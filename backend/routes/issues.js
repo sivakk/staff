@@ -1,6 +1,9 @@
 var express = require("express");
 var router = express.Router();
 const Issue = require("../models/issue");
+var moment = require("moment");
+var now = moment();
+
 
 
 router.get('/test', (req, res, next) => {
@@ -15,6 +18,7 @@ router.get('/test', (req, res, next) => {
 });
 
 router.get('/ss', (req, res, next) => {
+
 
   let bscd =
     abc = new Date(Date.now()).toLocaleString();
@@ -35,9 +39,11 @@ saveitem = function (newIssue, callback) {
   });
 }
 router.post('/post_route', (req, res, next) => {
+
+  let date = moment().format('MMMM Do YYYY,h:mm A');
   let item = req.body;
-  console.log(req.body);
-  console.log(item);
+  item.date = date;
+
 
   let newIssue = new Issue(item);
   saveitem(newIssue, function (err, resp, sucess) {

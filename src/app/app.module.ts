@@ -23,7 +23,7 @@ import {
 } from "@angular/material";
 import { HeaderComponent } from './header/header.component';
 import { IssueComponent } from './issue/issue.component';
-import { PostCreateComponent } from './posts/post-create/post-create.component';
+//import { PostCreateComponent } from './posts/post-create/post-create.component';
 import { PostListComponent } from './posts/post-list/post-list.component';
 import { AppRoutingModule } from "./app-routing.module";
 import { UsersComponent } from './posts/users/users.component';
@@ -32,7 +32,7 @@ import { UsersComponent } from './posts/users/users.component';
     AppComponent,
     HeaderComponent,
     IssueComponent,
-    PostCreateComponent,
+    // PostCreateComponent,
     PostListComponent,
     UsersComponent
   ],

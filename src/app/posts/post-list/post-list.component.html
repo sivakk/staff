@@ -80,7 +80,7 @@
 
           <div class="col-sm">
             <button type="button" (click)="stopClick()" [disabled]="jobended" class="btn btn-danger btn-lg btn btn-danger">
-              {{ onclick ? "jobcompleteeee" : "end"}}</button>
+              Stop job</button>
           </div>
 
         </div>
@@ -105,7 +105,6 @@
           <label>Comment :</label>
           <input type="text" class="form-control" name="issueComment" [(ngModel)]="issueComment">
         </div>
-        <div name="date" [(ngModel)]="date"></div>
         <button type="submit" name="button" class="btn btn-success" [disabled]=frm.invalid>Add
           Issue</button>
       </form>
