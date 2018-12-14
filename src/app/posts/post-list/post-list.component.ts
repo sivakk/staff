@@ -110,6 +110,11 @@ export class PostListComponent implements OnInit, OnDestroy {
 
       }
 
+      if (this.times[0].jobstarttime == "undefined") {
+        console.log("loading");
+
+      }
+
       this.jobstarttime = this.times[0].jobstarttime;
       this.jobendtime = this.times[0].jobendtime;
       this.jobstarted = this.times[0].jobstarted;

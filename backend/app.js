@@ -5,7 +5,6 @@ const mongoose = require("mongoose");
 
 const postsRoutes = require("./routes/posts");
 const issueRoutes = require("./routes/issues");
-const timeRoutes = require("./routes/timers");
 const timeRoute = require("./routes/times");
 const userRoute = require("./routes/users");
 
@@ -42,7 +41,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.use("/api/posts", postsRoutes);
+app.use("/api/posts", postsRoutes);
 app.use("/api/issues", issueRoutes);
 // app.use("/api/timers", timeRoutes);
 app.use("/api/time", timeRoute);

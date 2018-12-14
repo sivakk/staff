@@ -1,5 +1,4 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { AlertModule } from 'ngx-bootstrap';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { enableProdMode } from '@angular/core';
@@ -11,6 +10,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { MatDialog } from "@angular/material";
 import { ToastrModule } from "ngx-toastr";
 import * as moment from "moment";
+
 import {
   MatInputModule,
   MatSelect,
@@ -23,7 +23,7 @@ import {
 } from "@angular/material";
 import { HeaderComponent } from './header/header.component';
 import { IssueComponent } from './issue/issue.component';
-//import { PostCreateComponent } from './posts/post-create/post-create.component';
+import { PostCreateComponent } from './posts/post-create/post-create.component';
 import { PostListComponent } from './posts/post-list/post-list.component';
 import { AppRoutingModule } from "./app-routing.module";
 import { UsersComponent } from './posts/users/users.component';
@@ -32,14 +32,13 @@ import { UsersComponent } from './posts/users/users.component';
     AppComponent,
     HeaderComponent,
     IssueComponent,
-    // PostCreateComponent,
+    PostCreateComponent,
     PostListComponent,
     UsersComponent
   ],
   imports: [
     BrowserModule, BrowserModule,
     FormsModule,
-    AlertModule.forRoot(),
     AppRoutingModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
